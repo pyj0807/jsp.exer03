@@ -9,6 +9,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import beans.AccountDao;
 
 @WebServlet("/join.do")
 public class JoinController extends HttpServlet{
@@ -25,13 +28,26 @@ public class JoinController extends HttpServlet{
 		String name = req.getParameter("name");
 		String gender = req.getParameter("gender");
 		
+		AccountDao adao = new AccountDao();
+		
 		Map map = new HashMap<>();
 			map.put("id", id);
 			map.put("pass", pass);
 			map.put("name", name);
 			map.put("gender", gender);
 		
-				
+			
+		int t = adao.adddata(map);
+		HttpSession session = req.getSession();
+		
+		if(t == 1) {
+			session.setAttribute("auth", true);
+			resp.sendRedirect(req.getContextPath()+ "/index.do");
+		}else {
+			
+		}
+		
+		
 	
 	}
 }

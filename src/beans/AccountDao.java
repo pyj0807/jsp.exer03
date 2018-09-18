@@ -1,77 +1,59 @@
 package beans;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.LinkedHashMap;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
 public class AccountDao {
-	
-	String url = "jdbc:oracle:thin:@52.78.68.98:1521:xe";
-	String user = "dev";
-	String password = "oracle";
-	
-	public int addAccount(String id, String pass, String name, String gender) {
-		try {
-			Connection conn = DriverManager.getConnection(url, user, password);
-			String sql = "insert into account values(?, ?, ?, ?)";
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, id);
-			ps.setString(2, pass);
-			ps.setString(3, name);
-			ps.setString(4, gender);
-			int n = ps.executeUpdate(); // send → receive 작업을 함.
-			conn.close();
-			return n;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return -1;
-		}
+	SqlSessionFactory factory;
+
+	public AccountDao() throws IOException{
+		SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
+		InputStream is = Resources.getResourceAsStream("mybatis-config.xml");
 	}
 	
-	public Map getAccountById(String id) {
+	public Map getidpass(String a) {
+		SqlSession sql = factory.openSession();
 		try {
-			Connection conn = DriverManager.getConnection(url, user, password);
-			String sql = "select * from account where id=?";
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, id);
-			ResultSet rs = ps.executeQuery();
-			Map<String, Object> ret;
-			if (rs.next()) {
-				ret = new LinkedHashMap<>();
-				ret.put("id", rs.getString("id"));
-				ret.put("pass", rs.getString("pass"));
-				ret.put("name", rs.getString("name"));
-				ret.put("gender", rs.getString("gender"));
-			} else {
-				ret = null;
-			}
-			conn.close();
-			return ret;
+			Map p = sql.selectOne("account.getidpass");
+			return p;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-
-	public int setOnesPass(String id, String newPass) {
+	
+	public Map getidname(String a) {
+		SqlSession sql = factory.openSession();
 		try {
-			Connection conn = DriverManager.getConnection(url, user, password);
-			String sql = "update account set pass=? where id=?";
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, newPass);
-			ps.setString(2, id);
-			int n = ps.executeUpdate(); // send → receive 작업을 함.
-			conn.close();
-			return n;
+			Map m = sql.selectOne("account.getidname");
+			return m;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public int adddata(Map map) {
+		SqlSession sql = factory.openSession();
+		try {
+			
+			int r = sql.insert("account.addData", map);
+			if(r==1) 
+				sql.commit();
+			
+			return r;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return -1;
 		}
+		
 	}
-	
 	
 	
 	
