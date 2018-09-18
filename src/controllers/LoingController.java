@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import models.AccountDao;
+
 public class LoingController extends HttpServlet{
 	
 	@Override
@@ -14,7 +16,10 @@ public class LoingController extends HttpServlet{
 		String id = req.getParameter("id");
 		String pass =req.getParameter("pass");
 		
-		if()
+		AccountDao adao = new AccountDao();
+		
+		
+		
 	}
 
 }

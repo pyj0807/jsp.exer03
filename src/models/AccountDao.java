@@ -1,7 +1,8 @@
-package beans;
+package models;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.io.Resources;
@@ -13,47 +14,51 @@ public class AccountDao {
 	SqlSessionFactory factory;
 
 	public AccountDao() throws IOException{
-		SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
-		InputStream is = Resources.getResourceAsStream("mybatis-config.xml");
+		super();
 	}
 	
-	public Map getidpass(String a) {
+
+	public Map getAccountById(String id){
 		SqlSession sql = factory.openSession();
 		try {
-			Map p = sql.selectOne("account.getidpass");
+			Map p = sql.selectOne("account.getAccountById",id);
 			return p;
-		} catch (Exception e) {
+		}catch(Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 	
-	public Map getidname(String a) {
+	public List<Map> loginCheck(Map map){
 		SqlSession sql = factory.openSession();
 		try {
-			Map m = sql.selectOne("account.getidname");
-			return m;
-		} catch (Exception e) {
+			List<Map> p = sql.selectList("account.loginCheck",map);
+			System.out.println(p);
+			return p;
+		}catch(Exception e) {
 			e.printStackTrace();
 			return null;
-		}
-	}
-	
-	public int adddata(Map map) {
-		SqlSession sql = factory.openSession();
-		try {
-			
-			int r = sql.insert("account.addData", map);
-			if(r==1) 
-				sql.commit();
-			
-			return r;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return -1;
 		}
 		
 	}
+
+	
+	public int addAccount(Map map) {
+		SqlSession sql = factory.openSession();
+		try {
+			int r = sql.insert("account.addAccount",map);
+			if(r==1) {
+				sql.commit();
+			}
+			return r;
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+	
+	
 	
 	
 	
