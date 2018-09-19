@@ -19,11 +19,11 @@ public class SignUpCheckController extends HttpServlet {
 		
 		// 이 컨트롤러에서 처리결과를 보내는데 ajax의 결과물인 json을 보내야 된다면
 		resp.setContentType("application/json;charset=utf-8");
-		
 		PrintWriter out = resp.getWriter();
-String id = req.getParameter("id");
+		String id = req.getParameter("id");
 		
 		AccountDao adao = new AccountDao();
+		
 		Map m = adao.getAccountById(id);
 		if(m!=null) {
 			out.println(true);
@@ -31,8 +31,6 @@ String id = req.getParameter("id");
 			out.println(false);
 		}
 
-		
-		
 	
 	}
 	

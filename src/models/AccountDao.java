@@ -17,7 +17,7 @@ public class AccountDao {
 		super();
 	}
 	
-
+	
 	public Map getAccountById(String id){
 		SqlSession sql = factory.openSession();
 		try {
@@ -26,9 +26,12 @@ public class AccountDao {
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null;
+		}finally {
+			sql.close();
 		}
 	}
 	
+	// 로그인용
 	public List<Map> loginCheck(Map map){
 		SqlSession sql = factory.openSession();
 		try {
@@ -42,7 +45,7 @@ public class AccountDao {
 		
 	}
 
-	
+	// 가입
 	public int addAccount(Map map) {
 		SqlSession sql = factory.openSession();
 		try {
@@ -57,9 +60,12 @@ public class AccountDao {
 			return -1;
 		}
 	}
+
+
+
 	
 	
-	
+	//selectOne은 null 체크,  selectlist는 -1,-1로 체크
 	
 	
 }

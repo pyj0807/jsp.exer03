@@ -29,10 +29,11 @@ public class SessionController extends HttpServlet {
 		
 		AccountDao adao = new AccountDao();
 		List<Map> map = adao.loginCheck(m);
-			
-		if(map != null) {
+		
+		if(map.size() == 1) {
 			HttpSession session = req.getSession();
 			session.setAttribute("auth", true);
+			//session.setAttribute("user", id);	
 			resp.sendRedirect(req.getContextPath()+ "/index.do");
 		}else {
 			req.setAttribute("err", true);	
