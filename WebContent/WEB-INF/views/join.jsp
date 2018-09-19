@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MVC</title>
+<link rel="stylesheet" href="<%=application.getContextPath()%>/css/style.css" />
 </head>
 <body>
 	<%--
@@ -20,132 +21,122 @@
 		<h3 style="color: silver;">	Step2.당신의 관심사항을 설정하세요.</h3>
 		<form action="join.do" method="post" autocomplete="off" >
 			<p>
-					<b>아이디(*)</b><br /> <input type="text" name="joinid" value=""
-						placeholder="account id" style="width: 99%;" onkeyup="checkid(this)"/>
-					<small><span id="newid"></span></small>
-				</p>
-				<p>
-					<b>비밀번호(*)</b><br /> <input type="password" name="joinpass"  value=""
-						placeholder="account pass" style="width: 99%;"  onchange="checkpass(this)"/>
-					<small><span id="newpass1"></span></small>
-				</p>
-				<p>
-					<b>비밀번호 재확인(*)</b><br /> <input type="password" name="joinpass2" 
-						placeholder="confirm pass" style="width: 99%;" onkeyup="passcheck(this)"/>
-					<small><span id="newpass2"></span></small>
-				</p>
-				<p>
-					<b>이름(*)</b><br /> <input type="text" name="joinname"  value=""
-						placeholder="user name" style="width: 99%;" onkeyup="checkname(this)"/>
-					<small><span id="newname"></span></small>
-				</p>
-				<p>
-					<b>성별(*)</b><br /> <select name="joingender" style="width: 100%;">
-						<option value="M">남성</option>
-						<option value="F">여성</option>
-					</select>
+				<b>아이디(*)</b><br/>
+				<input type="text" id="inputid" name="id" placeholder="account id" onkeyup="checkId(this.value);" value="<%=request.getAttribute("id")%>" style="width: 99%;"/><span id="idspan"></span>
+			</p>
+			<p>
+				<b>비밀번호(*)</b><br/>	
+				<input type="password" id="inputpass" name="pass" placeholder="account pass" onkeyup="checkPass(this.value);"  value="<%=request.getAttribute("pass") %>" style="width: 99%;"/> <span id="pwspan"></span>
+			</p>
+			<p>
+				<b>비밀번호 재확인(*)</b><br/>	
+				<input type="password" name="pass2" placeholder="confirm pass" onkeyup="doubleCheck(this.value);"  style="width: 99%;"/><span id="pw2span"></span>
+			</p>
+			<p>
+				<b>이름(*)</b><br/>	
+				<input type="text" name="name" id="id" placeholder="user name" value="<%=request.getAttribute("name") %>" style="width: 99%;"/> 
+			</p>
+			<p>
+				<b>성별(*)</b><br/>	
+				<select name="gender" style="width: 100%;">
+					<option value="M">남성</option>
+					<option value="F">여성</option>
+				</select>
 			</p>
 			<p>
 				<button type="submit" style="widt h: 100%;">가입 신청</button>
 			</p>
 		</form>
 		<script>
-		var ar = [false,false,false,false];
-		var vaild = function() {
-			console.log(ar);
-			if(ar.includes(false)) {
-				document.getElementById("sbt").disabled=true;
-			}else {
-				document.getElementById("sbt").disabled=false;
-			}
-		};
-					
-		var checkid =function(a){
-			var c = a.value;
-			console.log(c);
-			var check = /^[a-zA-Z]\w{3,11}$/.test(c);
-			ar[0] = check;
-			if(check){
-				var req = new XMLHttpRequest();
-	            req.open("get","signup_check.do?id="+c); // 중복아이디검사 ajax로넘기는거 나중에하기
-	            req.onreadystatechange =function(){
-					var x =document.getElementById("newid");	
-	            	if(this.readyState==4){
-	            		console.log("여긴오냐?"+this.responseText)
-	            		if(this.responseText =="true"){
-							x.innerHTML = "사용 가능한 아이디입니다.";
-							x.style.color = "blue";
-							ar[0] = true;
-	            		}else{
-	            			x.innerHTML = "이미 사용 중인 아이디 입니다.";
-	            			x.style.color = "red";
-	            		}
-	            	}	
-	            };	
-	            req.send();
-	            vaild();
-			}else{
-				var x =document.getElementById("newid");
-				x.innerHTML = "영문,숫자 4~12자 내외";
-				x.style.color = "red";
-			}
-			vaild();
-		};
-	/* 	
-		var 
-		var req = new XMLHttpRequest();
-        req.open("get","signup_check.do?"+id); // 중복아이디검사 ajax로넘기는거 나중에하기 */
-		var checkname=function(a){
-			var c = a.value;
-			var check = /^[가-힇]{2,}$/.test(c);
-			ar[1] = check;
-			if(check){
-				var x =document.getElementById("newname");					
-				x.innerHTML = "일치합니다";
-				x.style.color = "blue";
-			}else{
-				var x =document.getElementById("newname");
-				x.innerHTML = "공백 없이 한글만 설정";
-				x.style.color = "red";
-			}
-			vaild();
-		};
-		
-		var checkpass=function(a){
-			var c = a.value;
-			var check = /^\w{4,12}$/.test(c);
-			ar[2] = check;
-			if(check){
-				var x =document.getElementById("newpass1");
-				x.innerHTML = "일치합니다";
-				x.style.color = "blue";
-			}else{
-				var x =document.getElementById("newpass1");
-				x.innerHTML = "4~12자";
-				x.style.color = "red";
-			}
-			vaild();
-		};
-		
-		var passcheck = function(a){
-			var p1 = document.getElementsByTagName("input")[1].value;
-			var p2 = a.value;
-			console.log(p2);
-			if(p2.length>0){
-				if(p1==p2){
-					var x =document.getElementById("newpass2");
-					x.innerHTML = "일치합니다";
-					x.style.color = "blue";
-					ar[3] = true;
+			var checkId = function(id){
+				var id = document.getElementById("inputid").value;
+				console.log("id="+id);
+				var r = /^[A-Za-z]{1}[0-9A-Za-z]{3,11}$/;
+				console.log(r.test(id));
+				if(r.test(id)){
+					var req = new XMLHttpRequest();
+					req.open("get","signup_check.do?id="+id); 
+					req.onreadystatechange = function() {
+						if(this.readyState==4) {
+							var m =JSON.parse(this.responseText.trim());
+							console.log("m="+m);
+							if(m==true){
+								document.getElementById("idspan").innerHTML = "이미 사용중인 아이디입니다.";
+								document.getElementById("idspan").style.color ="red";
+							}else {
+								document.getElementById("idspan").innerHTML = "아주 멋진 아이디에요.";
+								document.getElementById("idspan").style.color ="green";
+							}
+						}	
+					}
+					req.send();
 				}else{
-					var x =document.getElementById("newpass2");
-					x.innerHTML = "비밀번호확인해주세요";
-					x.style.color = "red";
+					document.getElementById("idspan").innerHTML = "아이디는 영문숫자혼용 4~12자로 설정바랍니다.";
+					document.getElementById("idspan").style.color ="red";
 				}
-			}
-			vaild();
+				//valid();
 		};
-
+		
+		
+		var checkPass = function(pass){
+			var pass = document.getElementById("inputpass").value;
+			console.log("pass="+id);
+			var r = /^[0-9A-Za-z-가-횧!@#$%^&*]{4,12}$/;
+			console.log(r.test(pass));
+			if(r.test(pass)){
+				var req = new XMLHttpRequest();
+				req.open("get","signup_check.do?pass="+pass); 
+				req.onreadystatechange = function() {
+					if(this.readyState==4) {
+						var resp = this.responseText.trim();
+						if(resp == "true"){
+							document.getElementById("pwspan").innerHTML = "유효하지 않은 비밀번호입니다.";
+							document.getElementById("pwspan").style.color ="red";
+						}else {
+							document.getElementById("pwspan").innerHTML = "안전한 비밀번호입니다.";
+							document.getElementById("pwspan").style.color ="green";
+						}
+					}
+				}
+				req.send();
+			}else{
+				document.getElementById("pwspan").innerHTML = "비밀번호는 4~12자로 입력해주세요.";
+				document.getElementById("pwspan").style.color ="red";
+			}
+			//valid();
+	};
+	
+	var doubleCheck= function(pw){
+		var pass2 = pw;
+		var passw= document.getElementById("inputpass").value;
+		console.log("비번2="+pass2);
+		//console.log("password : "+password);
+		console.log(passw==pass2);
+		if(passw==pass2){
+			document.getElementById("pw2span").innerHTML="비밀번호 중복확인 ok";
+			document.getElementById("pw2span").style.color="green";
+			
+		}else{
+			document.getElementById("pw2span").innerHTML="비밀번호가 일치하지 않습니다.";
+			document.getElementById("pw2span").style.color="red";
+		}
+		//valid();
+	}
+	
+	var checkname=function(a){
+		var c = a.value;
+		var check = /^[가-힇]{2,}$/.test(c);
+		if(check){
+			var x =document.getElementById("newname");					
+			x.innerHTML = "일치합니다";
+			x.style.color = "blue";
+		}else{
+			var x =document.getElementById("newname");
+			x.innerHTML = "공백 없이 한글만 설정";
+			x.style.color = "red";
+		}
+		vaild();
+	};
 		
 		</script>
 		
