@@ -14,7 +14,9 @@ public class AccountDao {
 	SqlSessionFactory factory;
 
 	public AccountDao() throws IOException{
-		super();
+		SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
+		InputStream is = Resources.getResourceAsStream("Mybatis-config.xml");
+		factory = builder.build(is);
 	}
 	
 	
@@ -32,10 +34,10 @@ public class AccountDao {
 	}
 	
 	// 로그인용
-	public List<Map> loginCheck(Map map){
+	public Map loginCheck(Map map){
 		SqlSession sql = factory.openSession();
 		try {
-			List<Map> p = sql.selectList("account.loginCheck",map);
+			Map p = sql.selectOne("account.loginCheck",map);
 			System.out.println(p);
 			return p;
 		}catch(Exception e) {

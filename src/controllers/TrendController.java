@@ -19,14 +19,8 @@ public class TrendController extends HttpServlet{
 	
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		IssueDao idao = new IssueDao();
-		
-		List<Map> list = idao.getAllDatas();
-		if(list.size() == 0) {
-			RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/views/");
-		}else {
-			
-		}
+		RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/views/trend.jsp"); 
+		rd.forward(req, resp);
 		
 	}
 }

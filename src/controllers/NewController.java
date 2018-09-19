@@ -25,7 +25,7 @@ public class NewController extends HttpServlet{
 		req.setAttribute("agree", "");
 		req.setAttribute("disagree", "");
 		
-		RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/issue/new.jsp");
+		RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/views/new.jsp");
 		rd.forward(req, resp);
 	}
 	
@@ -36,7 +36,6 @@ public class NewController extends HttpServlet{
 		String content = req.getParameter("content");
 		String agree = req.getParameter("agree");
 		String disagree = req.getParameter("disagree");
-		String writer = req.getParameter("writer");
 		
 		Map map = new HashMap<>();
 			map.put("cate", cate);
@@ -48,6 +47,10 @@ public class NewController extends HttpServlet{
 		IssueDao idao = new IssueDao();
 		int t = idao.addData(map);
 		if(t == 1) {
+			session.setAttribute("cate", cate);
+			session.setAttribute("content", content);
+			session.setAttribute("agree", agree);
+			session.setAttribute("disagree", disagree);
 			resp.sendRedirect(req.getContextPath()+"/trend.do");
 		}else {
 			RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/views/new.jsp");

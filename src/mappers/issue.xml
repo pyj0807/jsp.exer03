@@ -2,19 +2,15 @@
 <mapper namespace="issue">
 	
 	<insert parameterType="java.util.HashMap" id="addData">
-		insert into issue values (issue_seq.nextval, #{cate},#{content},#{agree},#{disagree},#{writer},sysdate ) 
+		insert into issue values(issue_seq.nextval, #{cate}, #{content}, #{agree}, #{disagree}, #{writer}, sysdate ) 
 	</insert>
 
 	<select id="getAllData"  parameterType="java.lang.String" resultType="java.util.HashMap">
-		select * from issue order by leftdate desc 
+		select * from issue order by cate desc 
 	</select>
 	
-	<select id="loginCheck" parameterType="java.util.HashMap" resultType="java.util.HashMap"> 
-		select * from account where id=#{id} and pass=#{pass} 
-	</select>
 	
-	<update id="inNewByNo" parameterType="java.lang.Integer">
-		update issue set agree = agree + 1 where no =#{no}
-	</update>
+	
+
 		
 </mapper>

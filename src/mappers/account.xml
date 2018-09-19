@@ -3,7 +3,7 @@
 
 	
 	<insert parameterType="java.util.HashMap" id="addAccount">
-		insert into accountvalues(#{id},#{pass},#{name},#{gender}) 
+		insert into account values(#{id},#{pass},#{name},#{gender}) 
 	</insert>
 
 	<select parameterType="java.lang.String" id="getAccountById" resultType="java.util.HashMap">

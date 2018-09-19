@@ -9,11 +9,13 @@
 </head>
 <body>
 	<div align="center">
-		<h1># MVC</h1>
+		<h1># MVC #</h1>
 		<div align="right" style="margin-right: 10%; margin-left: 10%; font-size: small;">
-			<b>blahblah</b>,  로그온 |
+			<b><%=session.getAttribute("id") %></b>,  로그온 |
 			<a href="<%=application.getContextPath() %>/logout.do">로그오프</a>
 			<hr/>
+			<a href="<%=application.getContextPath() %>/issue/new.do">글쓰기</a>
+			<a href="<%=application.getContextPath() %>/issue/trend.do">글목록</a>
 		</div>
 		<div style="margin-right: 10%; margin-left: 10%;">
 			<form action="<%=application.getContextPath() %>/search.do">
