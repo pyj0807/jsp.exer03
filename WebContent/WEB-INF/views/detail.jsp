@@ -1,5 +1,13 @@
+<%@page import="java.util.Map"%>
+<%@page import="java.util.List"%>
+<%@page import="models.IssueDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+	int t = Integer.parseInt(request.getParameter("no"));
+	IssueDao idao = new IssueDao();
+	Map li = idao.getOneByNo(t);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,23 +17,26 @@
 </head>
 <body>
 	<div align="center">
-		<h1># MVC</h1>
+		<h1># MVC #</h1>
 		<div align="right"
 			style="margin-right: 10%; margin-left: 10%; font-size: small;">
-			<b>???</b>, 로그온 | <a
-				href="<%=application.getContextPath()%>/logout.do">로그오프</a>
+			<b><%=session.getAttribute("id") %> |  로그온 | </b>   
+			<a href="<%=application.getContextPath()%>/logout.do">로그오프</a>
 			<hr />
 		</div>
 		<h2>【토론배틀】</h2>
 		<small style="font-style: italic;">찬성이냐, 반대냐 그것이 문제로다!</small>
 		<div style="margin-right: 10%; margin-left: 10%; text-align: left;">
-			<h3>#. 안락사 옳은정책인가</h3>
+		<%if(li != null){
+			
+		%>
+			<h3><%=li.get("CATE") %></h3>
 			<p>
-				안락사 옳은 정책인가<br/>
-				무거운 주제이지만 한번 쯤은 고민해볼 문제인것 같습니다.<br/><br/>
-				과연 안락사는 옳은 행위입니까?
+				<%=li.get("CONTENT") %>
 			</p>
+			
 		</div>
+		
 		<div style="margin-right: 10%; margin-left: 10%; text-align: left; margin-top: 	55px; font-size: small;">
 			<p style="color: blue">
 				<b>YES</b> 안락사를 허용해야 한다. <span>221</span> 명 
@@ -34,7 +45,7 @@
 				<b>NO</b> 안락사를 허용해서는 안된다. <span>721</span> 명 
 			</p>
 		</div>
-		
+		<%} %>
 		<div style="margin-right: 10%; margin-left: 10%; text-align: left; margin-top: 	55px;">
 			<p>
 			<b>〔의견남기기〕</b><br/>

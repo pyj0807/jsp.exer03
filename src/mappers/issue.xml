@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="issue">
 	
-	<insert parameterType="java.util.HashMap" id="addData">
+	<insert  id="addData" parameterType="java.util.HashMap">
 		insert into issue values(issue_seq.nextval, #{cate}, #{content}, #{agree}, #{disagree}, #{writer}, sysdate ) 
 	</insert>
 
 	<select id="getAllData"  parameterType="java.lang.String" resultType="java.util.HashMap">
-		select * from issue order by cate desc 
+		select * from issue cate by leftdate desc 
+		 
 	</select>
+	
+	<select id="getOneData" resultType="java.util.HashMap"> 
+		select * from issue where no=#{no} 
+	</select>
+	
 	
 	
 	

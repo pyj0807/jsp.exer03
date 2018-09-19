@@ -22,7 +22,7 @@ public class IssueDao {
 	public int addData(Map map) {
 		SqlSession sql = factory.openSession();
 		try {
-			int r = sql.insert("addData", map);
+			int r = sql.insert("issue.addData", map);
 			if(r ==1)
 				sql.commit();
 			return r;
@@ -32,11 +32,23 @@ public class IssueDao {
 		}
 	}
 	
-	public List<Map> getAllDatas() {
+	public List<Map> getAllData() {
 		SqlSession sql =factory.openSession();	
 		try {
-			List<Map> p = sql.selectList("getAllData");
+			List<Map> p = sql.selectList("issue.getAllData");
 			return p;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	
+	public Map getOneByNo(int no) {
+		SqlSession session = factory.openSession();
+		try {
+			
+			return session.selectOne("issue.getOneData", no);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null;
