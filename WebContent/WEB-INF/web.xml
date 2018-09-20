@@ -11,6 +11,6 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
 	<listener>
-		<listener-class>handler.ApplicationHandler</listener-class>
+		<listener-class>handlers.ApplicationHandler</listener-class>
 	</listener>
 </web-app>

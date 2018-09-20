@@ -6,7 +6,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MVC</title>
-<link rel="stylesheet" href="<%=application.getContextPath()%>/css/style.css" />
 </head>
 <body>
 	<%--
@@ -34,7 +33,7 @@
 			</p>
 			<p>
 				<b>이름(*)</b><br/>	
-				<input type="text" name="name" id="id" placeholder="user name" value="<%=request.getAttribute("name") %>" style="width: 99%;"/> 
+				<input type="text" name="name" id="name" placeholder="user name" value="<%=request.getAttribute("name") %>" style="width: 99%;"/> 
 			</p>
 			<p>
 				<b>성별(*)</b><br/>	
@@ -80,7 +79,7 @@
 		
 		var checkPass = function(pass){
 			var pass = document.getElementById("inputpass").value;
-			console.log("pass="+id);
+			console.log("pass="+pass);
 			var r = /^[0-9A-Za-z-가-횧!@#$%^&*]{4,12}$/;
 			console.log(r.test(pass));
 			if(r.test(pass)){
@@ -123,20 +122,19 @@
 		//valid();
 	}
 	
-	var checkname=function(a){
-		var c = a.value;
-		var check = /^[가-힇]{2,}$/.test(c);
+	var checkname=function(name){
+		var c = name.value;
+		var check = /^[가-힇]{2,}$/.test(c).value;
+		
 		if(check){
-			var x =document.getElementById("newname");					
-			x.innerHTML = "일치합니다";
-			x.style.color = "blue";
+			document.getElementById("newname").innerHTML = "일치합니다";
+			document.getElementById("newname").style.color = "blue";
 		}else{
-			var x =document.getElementById("newname");
-			x.innerHTML = "공백 없이 한글만 설정";
-			x.style.color = "red";
+			document.getElementById("newname").innerHTML = "공백 없이 한글만 설정";
+			document.getElementById("newname").style.color = "red";
 		}
 		vaild();
-	};
+	}
 		
 		</script>
 		

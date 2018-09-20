@@ -1,9 +1,10 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.List"%>
 <%@page import="models.IssueDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,24 +24,27 @@
 			<a href="<%=application.getContextPath() %>/issue/trend.do">글목록</a>
 		</div>
 		<h2>【토론목록】</h2>
+		<%
+			IssueDao idao = new IssueDao();
+			List<Map> list = (List)request.getAttribute("list");
+			SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm");
+		%>	
 		<div style="margin-right: 10%; margin-left: 10%; text-align: left">
 			<div style="margin-bottom: 15px;" 
 					onmouseenter="highlight(this, true);" onmouseleave="highlight(this, false)">
 					<%
-						IssueDao idao = new IssueDao();
-						List<Map> li = idao.getAllData();
-						for(int i = 0; i<li.size(); i++){
-							Map m = li.get(i);
+						for(int i = 0; i<list.size(); i++){
+							Map m = list.get(i);
 						
 					%>
 					
 				<p style="text-align: right; color: gray; font-size: small;" >
-					<%=m.get("CATE") %>/ <%=m.get("CONTENT") %> / <%=m.get("WRITER")%> 					
+					<%=m.get("CATE") %>/ <%=m.get("CONTENT") %> / <%=m.get("WRITER")%> / <%=sdf.format(m.get("REGDATE")) %> 				
 					
 					
 				</p>
 				<p>
-					<a href="<%=application.getContextPath()%>/issue/detail.do?no= <%=m.get("NO")%>"><b>ISSUE.</b><%=m.get("CONTENT") %> </a>
+					<a href="<%=application.getContextPath()%>/issue/detail.do?no=<%=m.get("NO")%>"><b>ISSUE.</b> <%=m.get("REP") %></a>
 				</p>
 				<%}%>
 			</div>

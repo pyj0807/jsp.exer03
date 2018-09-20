@@ -53,6 +53,7 @@ public class NewController extends HttpServlet{
 			session.setAttribute("disagree", disagree);
 			resp.sendRedirect(req.getContextPath()+"/issue/trend.do");
 		}else {
+			req.setAttribute("fail", true);
 			RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/views/new.jsp");
 			rd.forward(req, resp);
 		}
