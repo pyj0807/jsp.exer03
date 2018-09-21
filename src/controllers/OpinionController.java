@@ -66,9 +66,5 @@ public class OpinionController extends HttpServlet{
 		}else {
 			out.println("{\"rst\":false}");
 		}
-		
-		
 	}
-	
-
 }

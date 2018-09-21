@@ -20,6 +20,7 @@
 			<b><%=session.getAttribute("id") %> |  로그온 | </b>  
 				<a href="<%=application.getContextPath()%>/logout.do">로그오프</a>
 			<hr/>
+			<a href="<%=application.getContextPath() %>/index.do">홈</a>
 			<a href="<%=application.getContextPath() %>/issue/new.do">글쓰기</a>
 			<a href="<%=application.getContextPath() %>/issue/trend.do">글목록</a>
 		</div>

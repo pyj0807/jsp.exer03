@@ -96,7 +96,8 @@
 		
 		<div style="margin-right: 10%; margin-left: 10%; text-align: left; margin-top: 	35px;">
 			<p>
-				<b>〔전체의견 / <span id="tot"><%=((List)request.getAttribute("opinions")).size() %></span>〕</b><br/>
+				<b>〔전체의견 / <span id="tot"><%=((List)request.getAttribute("opinions")).size() %></span>〕</b>
+				<small id="time"></small>초 후에 업데이트<br/>
 			
 			</p>
 			<%
@@ -134,6 +135,7 @@
 								 html +="</li>"; 
 								  */
 								  
+								  
 								 if(obj[i].CHOICE ==1){
 									 html += "<li><b style=\"color:blue\">YES </b>"; 
 								 }else{
@@ -144,7 +146,7 @@
 							}
 							console.log(html);
 							document.getElementById("ments").innerHTML = html;					
-							document.getElementById("tot").innerHTML = "";
+							document.getElementById("tot").innerHTML = obj.length;
 							console.log(html);
 						}
 				}						
@@ -152,6 +154,7 @@
 			};
 			var time = 3;
 			window.setInterval( function(){
+				document.getElementById("time").innerHTML = time;
 				time --;
 				if(time==0){
 					latestAjax();

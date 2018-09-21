@@ -12,5 +12,6 @@
 	<select id="getOneData" resultType="java.util.HashMap"> 
 		select * from issue where no=#{no} 
 	</select>
-		
+	
+
 </mapper>
