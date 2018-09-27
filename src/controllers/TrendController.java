@@ -31,6 +31,9 @@ public class TrendController extends HttpServlet{
 				p.put("REP", ctr);
 			}
 		}
+		
+		
+		
 		req.setAttribute("list", list);
 		
 		RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/views/trend.jsp"); 

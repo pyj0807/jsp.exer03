@@ -10,13 +10,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-public class AccountDao {
-	SqlSessionFactory factory;
+public class AccountDao extends MybatisDao{
 
 	public AccountDao() throws IOException{
-		SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
-		InputStream is = Resources.getResourceAsStream("Mybatis-config.xml");
-		factory = builder.build(is);
+		super();
 	}
 	
 	
