@@ -40,6 +40,27 @@ public class OpinionDao extends MybatisDao{
 			sql.close();
 		}
 	}
-	
+	// «÷¿ÃΩ¥ 
+	public List<Map> hotissue() {
+		SqlSession sql = factory.openSession();
+		try {
+			List<Map> p = sql.selectList("opinion.getCountByChoice2");
+			return p;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+		
+	// ≥ª∞° ¿«∞ﬂ ≥≤±‰ ¿ÃΩ¥
+	public List<Map> myissue(String id) {
+		SqlSession sql = factory.openSession();
+		try {
+			return sql.selectList("opinion.getSomeByTalker",id);
+		} catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	 
 }

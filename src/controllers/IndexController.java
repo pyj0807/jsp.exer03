@@ -1,6 +1,8 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import models.IssueDao;
 
 
 @WebServlet("/index.do")
@@ -35,6 +39,10 @@ public class IndexController extends HttpServlet {
 			 */
 			rd.forward(req, resp);
 		} else {
+			IssueDao idao = new IssueDao();
+			List<Map> li = idao.getOneHot();
+			session.setAttribute("getOneHot", li);
+			System.out.println(session.getAttribute("getOneHot"));
 			RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/views/home.jsp");
 			rd.forward(req, resp);
 		}

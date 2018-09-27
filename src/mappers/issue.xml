@@ -13,6 +13,7 @@
 		select * from issue where no=#{no} 
 	</select>
 	
+	
 	<select id="getSomeRecent" resultType="java.util.HashMap">
 		select * from (select * from issue where sysdate-regdate &lt;=1 order by regdate desc) where rownum &lt;=3 
 	</select>
@@ -21,6 +22,9 @@
 		select * from (select * from issue where sysdate-regdate between 0 and 1 order by regdate desc) where rownum &lt;=3 
 	</select>
 	 -->
+	 
+	 
+	 
 	<select id="getAllWithOpinionCount" resultType="java.util.HashMap">
 		select * from issue t1 
 			left join (select ino, count(*) cnt from opinion group by ino) t2 on t1.no =t2.ino 
